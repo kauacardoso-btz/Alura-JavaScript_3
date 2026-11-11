@@ -1,4 +1,4 @@
-#Projeto Lista de Compras - Utilizado no Curso Objetos no JavaScript - Escola Front-End Alura
+# Projeto Lista de Compras - Utilizado no Curso Objetos no JavaScript - Escola Front-End Alura
 
 Neste arquivo encontram-se modelos de códigos que serão utilizados no decorrer do curso. 
 
@@ -25,7 +25,7 @@ Código modelo da li "Lista de compras":
             <i class="fa-solid fa-trash is-clickable deletar"></i>
         </div>
     </li>
-
+    
 Input com código refatorado:
 
     <div>
