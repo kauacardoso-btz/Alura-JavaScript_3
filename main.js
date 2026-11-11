@@ -1,13 +1,17 @@
-let listaDeCompras = ['Arroz', 'Biscoito', 'Suco']
+let listaDeItens = []
 
-const listaDeItens = {
-    item1: 'biscoito',
-    item2: 'Suco',
-    quantidade1: 3,
-    quantidade2: 4,
-    mostrarItens: function() {
-        alert('Comprei ' + listaDeItens.quantidade1 + ' pacotes de ' + listaDeItens.item1)
-    }
+const form = document.getElementById('form-itens')
+const itensInput = document.getElementById('receber-item')
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault()
+    salvarItem()
+})
+
+function salvarItem() {
+    const comprasItem = itensInput.value
+
+    listaDeItens.push({ valor: comprasItem })
+
+    console.log(listaDeItens);
 }
-
-listaDeItens.mostrarItens()
