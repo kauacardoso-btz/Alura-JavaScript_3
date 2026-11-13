@@ -2,11 +2,12 @@ let listaDeItens = []
 
 const form = document.getElementById('form-itens')
 const itensInput = document.getElementById('receber-item')
-const ulItens = document.querySelector('#lista-de-itens')
+const ulItens = document.getElementById('lista-de-itens')
 
 form.addEventListener('submit', (event) => {
     event.preventDefault()
     salvarItem()
+    mostrarItem()
 })
 
 function salvarItem() {
@@ -15,18 +16,25 @@ function salvarItem() {
 
     if (!checarDuplicado) {
         listaDeItens.push({ valor: comprasItem })
-        addItemLista(comprasItem)
     } else {
         alert('Item já existe!')
     }
-
-    console.log(listaDeItens);
 }
 
-
-function addItemLista(item) {
-    const li = document.createElement('li')
-    li.textContent = item
-
-    ulItens.appendChild(li)
+function mostrarItem() {
+    ulItens.innerHTML = ``
+    listaDeItens.forEach((elemento, index) => {
+        ulItens.innerHTML += 
+        `
+        <li class="item-compra is-flex is-justify-content-space-between" data-value="${index}">
+            <div>
+                <input type="checkbox" class="is-clickable" />
+                <input type="text" class="is-size-5" value="${elemento.valor}"></input>
+            </div>
+            <div>
+                <i class="fa-solid fa-trash is-clickable deletar"></i>
+            </div>
+        </li>
+        `
+    })
 }
