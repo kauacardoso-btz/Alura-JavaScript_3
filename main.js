@@ -9,6 +9,7 @@ form.addEventListener('submit', (event) => {
     event.preventDefault()
     salvarItem()
     mostrarItem()
+    itensInput.focus()
 })
 
 function salvarItem() {
@@ -62,8 +63,9 @@ function mostrarItem() {
         }
     })
 
-    const inputsCheck = document.querySelectorAll('input[type="checkbox"]')
 
+    // Atribuindo listener de evento para modificar estado do item 
+    const inputsCheck = document.querySelectorAll('input[type="checkbox"]')
 
     inputsCheck.forEach(i => {
         i.addEventListener('click', (event) => {
@@ -75,6 +77,22 @@ function mostrarItem() {
             mostrarItem()
         })
     })
+
+
+    // Atribuindo listener de evento para deletar aos botões 
+    const deletarObjetos = document.querySelectorAll('.deletar')
+
+    deletarObjetos.forEach(i => {
+        i.addEventListener('click', (event) => {
+            const valorElemento = event.target.parentElement.parentElement.getAttribute('data-value')
+
+            listaDeItens.splice(valorElemento, 1)
+
+            // mostrarItemComprados()
+            mostrarItem()
+        })
+    })
+
 }
 
 // function mostrarItemComprados() {
