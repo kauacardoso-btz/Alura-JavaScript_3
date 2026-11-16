@@ -5,6 +5,18 @@ const form = document.getElementById('form-itens')
 const itensInput = document.getElementById('receber-item')
 const ulItens = document.getElementById('lista-de-itens')
 const ulItensComprados = document.getElementById('itens-comprados')
+const listaRecuperada = localStorage.getItem('listaDeItens')
+
+function atualizaLocalStorage() {
+    localStorage.setItem('listaDeItens', JSON.stringify(listaDeItens))
+}
+
+if (listaRecuperada) {
+    listaDeItens = JSON.parse(listaRecuperada)
+    mostrarItem()
+} else {
+    listaDeItens = []
+}
 
 form.addEventListener('submit', (event) => {
     event.preventDefault()
@@ -68,14 +80,11 @@ function mostrarItem() {
 
     // Atribuindo listener de evento para modificar estado do item 
     const inputsCheck = document.querySelectorAll('input[type="checkbox"]')
-
     inputsCheck.forEach(i => {
         i.addEventListener('click', (event) => {
             const valorElemento = event.target.parentElement.parentElement.getAttribute('data-value')
 
             listaDeItens[valorElemento].checar = event.target.checked
-
-            // mostrarItemComprados()
             mostrarItem()
         })
     })
@@ -83,35 +92,31 @@ function mostrarItem() {
 
     // Atribuindo listener de evento para deletar aos botões 
     const deletarObjetos = document.querySelectorAll('.deletar')
-
     deletarObjetos.forEach(i => {
         i.addEventListener('click', (event) => {
             const valorElemento = event.target.parentElement.parentElement.getAttribute('data-value')
 
             listaDeItens.splice(valorElemento, 1)
-
-            // mostrarItemComprados()
             mostrarItem()
         })
     })
 
+    // Atribuindo listener de evento para editar aos botões 
     const editarItens = document.querySelectorAll('.editar')
-
     editarItens.forEach(i => {
         i.addEventListener('click', (event) => {
             itemEditar = event.target.parentElement.parentElement.getAttribute('data-value')
-
-            // mostrarItemComprados()
             mostrarItem()
         })
     })
+
+    atualizaLocalStorage()
+
 }
 
 function salvarEdicao() {
     const itemEditado = document.querySelector(`[data-value="${itemEditar}"] input[type="text"]`)
-
     const novoValor = itemEditado.value.trim().toUpperCase()
-
     const checarDuplicado = listaDeItens.some(
         (elemento, indice) =>
             elemento.valor === novoValor && indice !== itemEditar
@@ -125,24 +130,3 @@ function salvarEdicao() {
         mostrarItem()
     }
 }
-
-// function mostrarItemComprados() {
-//     ulItensComprados.innerHTML = ``
-//     listaDeItens.forEach((elemento, index) => {
-//         ulItensComprados.innerHTML +=
-//         `
-//         <li class="item-compra is-flex is-justify-content-space-between" data-value="${index}">
-//             <div>
-//                 <input type="checkbox" checked class="is-clickable" />  
-//                 <span class="itens-comprados is-size-5">${elemento.valor}</span>
-//             </div>
-//             <div>
-//                 <i class="fa-solid fa-trash is-clickable deletar"></i>
-//             </div>
-//         </li>
-//         `
-//     })
-
-
-//     mostrarItem()
-// }
