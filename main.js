@@ -1,4 +1,5 @@
 let listaDeItens = []
+let itemEditar
 
 const form = document.getElementById('form-itens')
 const itensInput = document.getElementById('receber-item')
@@ -53,9 +54,10 @@ function mostrarItem() {
             <li class="item-compra is-flex is-justify-content-space-between" data-value="${index}">
                 <div>
                     <input type="checkbox" class="is-clickable" />
-                    <input type="text" class="is-size-5" value="${elemento.valor}"></input>
+                    <input type="text" class="is-size-5" value="${elemento.valor}" ${index != itemEditar ? 'disabled' : ''}></input>
                 </div>
                 <div>
+                    ${index != itemEditar ? `<i class="fa-regular is-clickable fa-pen-to-square editar"></i>` : `<button onclick="salvarEdicao()"><i class="fa-regular fa-floppy-disk is-clickable"></i></button>`}
                     <i class="fa-solid fa-trash is-clickable deletar"></i>
                 </div>
             </li>
@@ -93,6 +95,35 @@ function mostrarItem() {
         })
     })
 
+    const editarItens = document.querySelectorAll('.editar')
+
+    editarItens.forEach(i => {
+        i.addEventListener('click', (event) => {
+            itemEditar = event.target.parentElement.parentElement.getAttribute('data-value')
+
+            // mostrarItemComprados()
+            mostrarItem()
+        })
+    })
+}
+
+function salvarEdicao() {
+    const itemEditado = document.querySelector(`[data-value="${itemEditar}"] input[type="text"]`)
+
+    const novoValor = itemEditado.value.trim().toUpperCase()
+
+    const checarDuplicado = listaDeItens.some(
+        (elemento, indice) =>
+            elemento.valor === novoValor && indice !== itemEditar
+    )
+
+    if (checarDuplicado) {
+        alert('Item já existe!')
+    } else {
+        listaDeItens[itemEditar].valor = itemEditado.value.toUpperCase()
+        itemEditar = -1
+        mostrarItem()
+    }
 }
 
 // function mostrarItemComprados() {
